@@ -1,0 +1,22 @@
+[
+  { "nombre": "Chile", "idioma": "Español", "colores_bandera": ["Rojo", "Blanco", "Azul"] },
+  { "nombre": "Argentina", "idioma": "Español", "colores_bandera": ["Celeste", "Blanco", "Amarillo"] },
+  { "nombre": "México", "idioma": "Español", "colores_bandera": ["Verde", "Blanco", "Rojo"] },
+  { "nombre": "España", "idioma": "Español", "colores_bandera": ["Rojo", "Amarillo"] },
+  { "nombre": "Colombia", "idioma": "Español", "colores_bandera": ["Amarillo", "Azul", "Rojo"] },
+  { "nombre": "Perú", "idioma": "Español", "colores_bandera": ["Rojo", "Blanco"] },
+  { "nombre": "Brasil", "idioma": "Portugués", "colores_bandera": ["Verde", "Amarillo", "Azul", "Blanco"] },
+  { "nombre": "Portugal", "idioma": "Portugués", "colores_bandera": ["Verde", "Rojo", "Amarillo"] },
+  { "nombre": "Estados Unidos", "idioma": "Inglés", "colores_bandera": ["Rojo", "Blanco", "Azul"] },
+  { "nombre": "Reino Unido", "idioma": "Inglés", "colores_bandera": ["Rojo", "Blanco", "Azul"] },
+  { "nombre": "Canadá", "idioma": "Inglés y Francés", "colores_bandera": ["Rojo", "Blanco"] },
+  { "nombre": "Francia", "idioma": "Francés", "colores_bandera": ["Azul", "Blanco", "Rojo"] },
+  { "nombre": "Alemania", "idioma": "Alemán", "colores_bandera": ["Negro", "Rojo", "Amarillo"] },
+  { "nombre": "Italia", "idioma": "Italiano", "colores_bandera": ["Verde", "Blanco", "Rojo"] },
+  { "nombre": "Japón", "idioma": "Japonés", "colores_bandera": ["Blanco", "Rojo"] },
+  { "nombre": "China", "idioma": "Chino mandarín", "colores_bandera": ["Rojo", "Amarillo"] },
+  { "nombre": "Rusia", "idioma": "Ruso", "colores_bandera": ["Blanco", "Azul", "Rojo"] },
+  { "nombre": "India", "idioma": "Hindi", "colores_bandera": ["Azafrán", "Blanco", "Verde", "Azul"] },
+  { "nombre": "Egipto", "idioma": "Árabe", "colores_bandera": ["Rojo", "Blanco", "Negro", "Dorado"] },
+  { "nombre": "Australia", "idioma": "Inglés", "colores_bandera": ["Azul", "Rojo", "Blanco"] }
+]
