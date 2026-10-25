@@ -172,3 +172,17 @@ kbd {
 #restart-btn:hover {
   background: #9bbdff;
 }
+
+/* ---- Selector de skin ---- */
+#skin-select {
+  background: #22223a;
+  color: #e0e0e0;
+  border: 1px solid #3a3a5a;
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+body[data-skin="neon"] { background: #05050a; }
+body[data-skin="pastel"] { background: #1c1826; }
