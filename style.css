@@ -155,7 +155,7 @@ kbd {
   color: #7aa2f7;
 }
 
-#restart-btn {
+#restart-btn, .menu-btn {
   margin-top: 8px;
   background: #7aa2f7;
   color: #0f0f17;
@@ -169,6 +169,55 @@ kbd {
   transition: background 0.15s;
 }
 
-#restart-btn:hover {
+#restart-btn:hover, .menu-btn:hover, .menu-btn:focus-visible {
   background: #9bbdff;
+}
+
+/* ---- Menú de pausa ---- */
+.menu-title {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: #ffd54f;
+}
+
+.menu-btn {
+  width: 180px;
+  margin-top: 0;
+}
+
+.menu-controls {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  color: #aaa;
+  text-align: left;
+}
+
+.menu-controls.hidden {
+  display: none;
+}
+
+.menu-level {
+  font-size: 13px;
+  color: #e0e0e0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.menu-level select {
+  background: #22223a;
+  color: #e0e0e0;
+  border: 1px solid #3a3a5a;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 13px;
+}
+
+.menu-hint {
+  font-size: 11px;
+  color: #888;
 }

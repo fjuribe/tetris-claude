@@ -39,8 +39,36 @@ const overlay = document.getElementById('overlay');
 const overlayTitle = document.getElementById('overlay-title');
 const overlayScore = document.getElementById('overlay-score');
 const restartBtn = document.getElementById('restart-btn');
+const pauseMenu = document.getElementById('pause-menu');
+const resumeBtn = document.getElementById('resume-btn');
+const pauseRestartBtn = document.getElementById('pause-restart-btn');
+const controlsBtn = document.getElementById('controls-btn');
+const controlsList = document.getElementById('controls-list');
+const startLevelSelect = document.getElementById('start-level');
+
+const START_LEVEL_KEY = 'tetris.startLevel';
+const RESUME_GUARD_MS = 150;
 
 let board, current, next, score, lines, level, paused, gameOver, lastTime, dropAccum, dropInterval, animId;
+let startLevel = loadStartLevel();
+let gameStartLevel = startLevel;
+let ignoreKeysUntil = 0;
+
+function loadStartLevel() {
+  try {
+    const n = parseInt(localStorage.getItem(START_LEVEL_KEY), 10);
+    if (n >= 1 && n <= 10) return n;
+  } catch (e) { /* sin localStorage */ }
+  return 1;
+}
+
+function saveStartLevel(n) {
+  try { localStorage.setItem(START_LEVEL_KEY, n); } catch (e) { /* sin localStorage */ }
+}
+
+function speedForLevel(lv) {
+  return Math.max(100, 1000 - (lv - 1) * 90);
+}
 
 function createBoard() {
   return Array.from({ length: ROWS }, () => new Array(COLS).fill(0));
@@ -106,8 +134,8 @@ function clearLines() {
   if (cleared) {
     lines += cleared;
     score += (LINE_SCORES[cleared] || 0) * level;
-    level = Math.floor(lines / 10) + 1;
-    dropInterval = Math.max(100, 1000 - (level - 1) * 90);
+    level = gameStartLevel + Math.floor(lines / 10);
+    dropInterval = speedForLevel(level);
     updateHUD();
   }
 }
@@ -230,14 +258,21 @@ function togglePause() {
   if (gameOver) return;
   paused = !paused;
   if (!paused) {
+    document.activeElement.blur();
+    pauseMenu.classList.add('hidden');
+    dropAccum = 0;
     lastTime = performance.now();
+    ignoreKeysUntil = lastTime + RESUME_GUARD_MS;
     loop(lastTime);
   } else {
     cancelAnimationFrame(animId);
-    overlayTitle.textContent = 'PAUSA';
-    overlayScore.textContent = '';
-    overlay.classList.remove('hidden');
+    pauseMenu.classList.remove('hidden');
+    resumeBtn.focus();
   }
+}
+
+function restartFromMenu() {
+  init();
 }
 
 function loop(ts) {
@@ -257,26 +292,38 @@ function loop(ts) {
 }
 
 function init() {
+  document.activeElement.blur();
   board = createBoard();
   score = 0;
   lines = 0;
-  level = 1;
+  gameStartLevel = startLevel;
+  level = gameStartLevel;
   paused = false;
   gameOver = false;
-  dropInterval = 1000;
+  dropInterval = speedForLevel(level);
   dropAccum = 0;
   lastTime = performance.now();
   next = randomPiece();
   spawn();
   updateHUD();
   overlay.classList.add('hidden');
+  pauseMenu.classList.add('hidden');
   cancelAnimationFrame(animId);
   animId = requestAnimationFrame(loop);
 }
 
 document.addEventListener('keydown', e => {
-  if (e.code === 'KeyP') { togglePause(); return; }
+  if (e.code === 'KeyP' || e.code === 'Escape') {
+    e.preventDefault();
+    if (!e.repeat) togglePause();
+    return;
+  }
   if (paused || gameOver) return;
+  if (performance.now() < ignoreKeysUntil) {
+    if (e.code === 'Space') e.preventDefault();
+    return;
+  }
+  if (e.code.startsWith('Arrow')) e.preventDefault();
   switch (e.code) {
     case 'ArrowLeft':
       if (!collide(current.shape, current.x - 1, current.y)) current.x--;
@@ -300,5 +347,16 @@ document.addEventListener('keydown', e => {
 });
 
 restartBtn.addEventListener('click', init);
+resumeBtn.addEventListener('click', () => { resumeBtn.blur(); togglePause(); });
+pauseRestartBtn.addEventListener('click', restartFromMenu);
+controlsBtn.addEventListener('click', () => {
+  const open = controlsList.classList.toggle('hidden') === false;
+  controlsBtn.setAttribute('aria-expanded', open);
+});
+startLevelSelect.value = startLevel;
+startLevelSelect.addEventListener('change', () => {
+  startLevel = parseInt(startLevelSelect.value, 10);
+  saveStartLevel(startLevel);
+});
 
 init();
